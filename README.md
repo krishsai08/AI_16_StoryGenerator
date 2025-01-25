@@ -121,7 +121,7 @@ This platform can be used to upload images of scenes, people, or items. Based on
 2. **Story Generation**: 
    - After uploading, the system will generate a story based on the detected objects in the images.
 3. **Live Demo**:
-   - The live project can be accessed [here](https://your-deployed-url).
+   - The live project can be accessed [here] https://drive.google.com/file/d/1fFIFbKk2oPQRGmMzyjDJs0NqqBZvxj8L/view?usp=drive_link.
 
 ---
 
