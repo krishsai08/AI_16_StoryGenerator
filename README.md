@@ -180,7 +180,6 @@ Here’s an overview of the project directory structure:
 ## **k. Credits and References**
 
 - **Team Members**: Avvaru Dona Krishna Sai, Kuthyaru Lakshmi Janardhan, Guduru Mounika, Abdul Nafisa Sulthana
-- **Mentors**: [Your Mentor's Name]
 - **Libraries Used**:
   - YOLOv8 (Ultralytics)
   - HuggingFace Transformers (GPT-2)
