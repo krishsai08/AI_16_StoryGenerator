@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1200px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .left-panel, .right-panel {
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .left-panel {
+            background-color: #f9fafb;
+            border-right: 1px solid #e5e7eb;
+        }
+        .right-panel {
+            background-color: #ffffff;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            background-color: #f9fafb;
+            font-size: 14px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .story-output {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+        .status-bar {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #4B5563;
+            text-align: center;
+        }
+        .status-bar.active {
+            color: #10B981; /* Green status color */
+        }
+        .status-bar.loading {
+            color: #F59E0B; /* Yellow status color */
+        }
+        .status-bar.error {
+            color: #EF4444; /* Red status color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Input Panel -->
+        <div class="left-panel">
+            <h1>Upload Your Images</h1>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <label for="file-upload">
+                    Select between 3 and 10 images:
+                </label>
+                <input 
+                    type="file" 
+                    id="file-upload" 
+                    name="file" 
+                    accept="image/*" 
+                    multiple 
+                    required 
+                    onchange="checkFileCount(this)"
+                >
+                <div class="status-bar" id="status-bar">Waiting for input...</div>
+                <button type="submit" id="generate-btn" disabled>Generate Story</button>
+            </form>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="right-panel">
+            <h1>Your Generated Story</h1>
+            <div class="story-output" id="story-output">
+                {% if story %}
+                    <p>{{ story }}</p>
+                {% else %}
+                    <p>Your story will appear here after generation.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enforce 3-10 image upload limit
+        function checkFileCount(input) {
+            const statusBar = document.getElementById('status-bar');
+            const generateBtn = document.getElementById('generate-btn');
+            const files = input.files;
+
+            if (files.length < 3 || files.length > 10) {
+                statusBar.textContent = "Please upload between 3 and 10 images.";
+                statusBar.className = "status-bar error";
+                generateBtn.disabled = true;
+            } else {
+                statusBar.textContent = "Ready to generate story!";
+                statusBar.className = "status-bar active";
+                generateBtn.disabled = false;
+            }
+        }
+
+        // Display loading status when form is submitted
+        document.querySelector('form').addEventListener('submit', function () {
+            const statusBar = document.getElementById('status-bar');
+            statusBar.textContent = "Generating your story... Please wait.";
+            statusBar.className = "status-bar loading";
+        });
+    </script>
+</body>
+</html>
